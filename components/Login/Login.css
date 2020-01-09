@@ -1,0 +1,17 @@
+.paper{
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: 'center';
+}
+.avatar {
+    margin: 'theme.spacing(1)';
+    background-color : white;
+}
+.form {
+    width: '100%'; 
+    margin-top: 'theme.spacing(1)';
+  }
+.submit{
+    margin: 'theme.spacing(3, 0, 2)';
+  }

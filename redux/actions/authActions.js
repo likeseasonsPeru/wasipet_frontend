@@ -29,8 +29,9 @@ const register = ({ name, photo, email, phone, type_user, password, confirm_pass
       headers: headers
     })
       .then((response) => {
-        Router.push('/signin');
-        console.log(response.data.meta.message);
+        setCookie('token', response.data.token);
+        Router.push('/dashboard');
+        dispatch({type: AUTHENTICATE, payload: response.data.token});
       })
       .catch((err) => {
         /*switch (err.response.status) {
@@ -64,33 +65,32 @@ const authenticate = ({ email, password }, type) => {
       email : email,
       password: password
     };
-    console.log(email)
     axios.post(`${API}/${type}`, postData,{
       headers: headers
     })
       .then((response) => {
         console.log(response);
         setCookie('token', response.data.token);
-        Router.push('/users');
+        Router.push('/dashboard');
         dispatch({type: AUTHENTICATE, payload: response.data.token});
       })
       .catch((err) => {
-        /*switch (err.response.status) {
+        switch (err.response.status) {
           case 422:
-          alert(err.response.data.meta.message);
+          alert(err.response.data);
+          
             break;
-          case 401:
-          alert(err.response.data.meta.message);
+          case 404:
+            alert(err.response.data);
             break;
           case 500:
-          alert('Interval server error! Try again!');
+          alert('Error Interno del servidor! Intentelo!');
             break;
           default:
-          alert(err.response.data.meta.message);
+          alert(err.response.data);
             break;
-        }*/
-        console.log(err);
-
+        }
+        //console.log(err.response.data);
       });
   };
 };
@@ -139,7 +139,6 @@ const deauthenticate = () => {
 };
 
 const getUser = ({ token }, type) => {
-  console.log(token)
   return (dispatch) => {
     axios.get(`${API}/${type}`,{headers: {
       "Authorization" : "Bearer " + token

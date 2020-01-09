@@ -1,37 +1,35 @@
+import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { connect } from 'react-redux';
 import actions from '../redux/actions';
-import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 
+//{!isAuthenticated && <Link href="/"><a>Login</a></Link>}
+//{isAuthenticated && <Link href="/dashboard"><a>Home</a></Link>}
 const Layout = ({ children, title, isAuthenticated, deauthenticate }) => (
-  
+    
   <div>
     <Head>
       <title>{ title }</title>
       <meta charSet="utf-8" />
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
     </Head>
-    <Container>
     <div className="text-center">
-      <ul className="nav">
-        <Link href="/"><a>Inicio</a></Link>
-        {!isAuthenticated && <Link href="/signin"><a>Sign In</a></Link>}
-        {!isAuthenticated && <Link href="/signup"><a>Sign Up</a></Link>}
-        {isAuthenticated && <Link href="/users"><a>Profile</a></Link>}
-        {isAuthenticated && <li onClick={deauthenticate}><a>Sign Out</a></li>}
-      </ul>
+      <div className="nav" style={{float:'left', width:'100%',display:'flex',}}>
+        <div style={{width:'50%'}}>
+          { children }
+        </div> 
+        <div style={{width:'50%'}}>
+          {isAuthenticated && <Button color="secondary" style={{float:'right'}}  onClick={deauthenticate} type="button" >Salir</Button>}
+        </div> 
+      </div>
     </div>
 
     <div className="has-text-centered">
-      { children }
     </div>
-    </Container>
   </div>
-
-  
-  
 );
 
 const mapStateToProps = (state) => (
