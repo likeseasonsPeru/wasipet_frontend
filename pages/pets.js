@@ -21,7 +21,7 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListNav from '../components/Dashboard/ListNav';
-import TableUsers from '../components/Users/TableUsers';
+import TablePets from '../components/Pets/TablePets';
 const drawerWidth = 240;
 const classes = theme => ({
   root: {
@@ -102,7 +102,7 @@ const classes = theme => ({
   },
 });
 
-class Users extends React.Component {
+class Pets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -180,7 +180,7 @@ class Users extends React.Component {
           <Grid container spacing={3}>
             <Grid item xs={12} style={{margin: '60px 0px 0px 0px'}}>
               <Paper >
-                  <TableUsers></TableUsers>
+                  <TablePets></TablePets>
               </Paper>
             </Grid>
           </Grid>
@@ -198,5 +198,5 @@ class Users extends React.Component {
   }
 }
 
-export default withStyles(classes)(connect(state => state, actions)(Users));
+export default withStyles(classes)(connect(state => state, actions)(Pets));
 //export default compose( withStyles(classes, { name: 'Dashboard',}),connect(state => state, actions))(Dashboard);

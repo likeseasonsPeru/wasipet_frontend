@@ -21,7 +21,7 @@ export default class ListNav extends React.Component{
           <ListItemText primary="Gráficas" />
         </ListItem>
         </Link>
-        <Link href="/usuarios">
+        <Link href="/users">
         <ListItem button>
           <ListItemIcon>
             <PeopleIcon />
@@ -29,7 +29,7 @@ export default class ListNav extends React.Component{
           <ListItemText primary="Usuarios" />
         </ListItem>
         </Link>
-        <Link href="/mascotas">
+        <Link href="/pets">
         <ListItem button>
           <ListItemIcon>
             <PetsIcon />
