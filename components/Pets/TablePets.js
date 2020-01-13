@@ -9,6 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import LookPet from './ViewDetailsPet';
 
 class TablePets extends React.Component{
     
@@ -66,16 +67,13 @@ class TablePets extends React.Component{
                             Sexo
                         </TableCell>
                         <TableCell align="center">
-                            Dueño
+                            Código de dueño
                         </TableCell>
                         <TableCell align="center">
                             Photo
                         </TableCell>
                         <TableCell align="center">
-                            Component Edit
-                        </TableCell>
-                        <TableCell align="center">
-                            Component Delete
+                            Ver Detalles
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -103,10 +101,15 @@ class TablePets extends React.Component{
                                     {pet.photo}
                                 </TableCell>
                                 <TableCell align="center">
-                                    Component Edit
-                                </TableCell>
-                                <TableCell align="center">
-                                    Component Delete
+                                    <LookPet 
+                                    name={pet.name}
+                                    photo={pet.photo}
+                                    age={pet.age}
+                                    sex={pet.sex}
+                                    owner={pet.owner}
+                                    breed={pet.breed}
+                                    fecha={pet.createdAt}
+                                    />
                                 </TableCell>
                             </TableRow>
                         )
@@ -114,7 +117,7 @@ class TablePets extends React.Component{
                 ) : (
                     <TableRow hover role="checkbox" >
                         <TableCell>
-                            -.. Loading
+                            ... Loading
                         </TableCell>      
                     </TableRow>
                 ) 

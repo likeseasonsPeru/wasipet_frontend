@@ -64,7 +64,7 @@ class LoginForm extends React.Component {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Correo electrónico"
             name="email"
             type="email"
             autoComplete="email"

@@ -69,7 +69,7 @@ const authenticate = ({ email, password }, type) => {
       headers: headers
     })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         setCookie('token', response.data.token);
         Router.push('/dashboard');
         dispatch({type: AUTHENTICATE, payload: response.data.token});

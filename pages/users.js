@@ -176,9 +176,12 @@ class Users extends React.Component {
       </Drawer>
       <main className={classes.content}>
        
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} style={{margin: '60px 0px 0px 0px'}}>
+        <Container maxWidth="lg" className={classes.container} style={{marginTop: '60px'}}>
+          <h1>
+            Usuarios
+          </h1>
+          <Grid container spacing={2}>
+            <Grid item xs={12}  >
               <Paper >
                   <TableUsers></TableUsers>
               </Paper>

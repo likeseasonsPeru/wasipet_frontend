@@ -22,7 +22,7 @@ const Layout = ({ children, title, isAuthenticated, deauthenticate }) => (
           { children }
         </div> 
         <div style={{width:'50%'}}>
-          {isAuthenticated && <Button color="secondary" style={{float:'right'}}  onClick={deauthenticate} type="button" >Salir</Button>}
+          {isAuthenticated && <Button variant="contained" color="secondary" style={{float:'right'}}  onClick={deauthenticate} type="button" >Salir</Button>}
         </div> 
       </div>
     </div>

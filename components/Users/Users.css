@@ -1,0 +1,6 @@
+.colorInputDisabled input{
+    color:black !important;
+}
+.colorInputDisabled label{
+    color:#3f51b5 !important;
+}

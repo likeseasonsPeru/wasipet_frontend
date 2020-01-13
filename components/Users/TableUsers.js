@@ -9,6 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import LookUser from './ViewDetailsUser';
 
 class TableUsers extends React.Component{
     
@@ -16,7 +17,7 @@ class TableUsers extends React.Component{
         super(props);
         this.state = {
             token : getCookie('token'),
-            users :[],
+            users :{},
             isLoading: true,
             error: null
         };
@@ -57,19 +58,16 @@ class TableUsers extends React.Component{
                             Nombre
                         </TableCell>
                         <TableCell align="center">
+                            Tipo
+                        </TableCell>
+                        <TableCell align="center">
                             Email
                         </TableCell>
                         <TableCell align="center">
                             Teléfono
                         </TableCell>
                         <TableCell align="center">
-                            ID de usuario
-                        </TableCell>
-                        <TableCell align="center">
-                            Acción
-                        </TableCell>
-                        <TableCell align="center">
-                            Acción
+                            Ver detalles
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -81,6 +79,9 @@ class TableUsers extends React.Component{
                                 <TableCell key={user.name} align="center">
                                     {user.name}
                                 </TableCell>
+                                <TableCell key={user.type} align="center">
+                                    {user.type}
+                                </TableCell>
                                 <TableCell key={user.email} align="center">
                                     {user.email}
                                 </TableCell>
@@ -88,13 +89,16 @@ class TableUsers extends React.Component{
                                     {user.phone}
                                 </TableCell>
                                 <TableCell key={user.user_id} align="center">
-                                    {user.user_id}
-                                </TableCell>
-                                <TableCell align="center">
-                                    Component Edit
-                                </TableCell>
-                                <TableCell align="center">
-                                    Component Delete
+                                    <LookUser
+                                    name={user.name}
+                                    points={user.points}
+                                    type={user.type}
+                                    phone={user.phone}
+                                    photo={user.photo}
+                                    email={user.email}
+                                    user_id={user.user_id}
+                                    fecha={user.createdAt}
+                                    /> 
                                 </TableCell>
                             </TableRow>
                         )
@@ -102,7 +106,7 @@ class TableUsers extends React.Component{
                 ) : (
                     <TableRow hover role="checkbox" >
                         <TableCell>
-                            -.. Loading
+                            ... Loading
                         </TableCell>      
                     </TableRow>
                 ) 
