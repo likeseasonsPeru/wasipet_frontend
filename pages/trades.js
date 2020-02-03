@@ -102,7 +102,7 @@ const classes = theme => ({
   },
 });
 
-class Users extends React.Component {
+class Trades extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -201,5 +201,5 @@ class Users extends React.Component {
   }
 }
 
-export default withStyles(classes)(connect(state => state, actions)(Users));
+export default withStyles(classes)(connect(state => state, actions)(Trades));
 //export default compose( withStyles(classes, { name: 'Dashboard',}),connect(state => state, actions))(Dashboard);
