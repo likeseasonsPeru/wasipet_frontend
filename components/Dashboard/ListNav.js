@@ -37,7 +37,7 @@ export default class ListNav extends React.Component{
           <ListItemText primary="Mascotas" />
         </ListItem>
         </Link>
-        <Link href="/canjes">
+        <Link href="/trades">
         <ListItem button>
           <ListItemIcon>
             <ShoppingCartIcon />

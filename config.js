@@ -1,4 +1,4 @@
   
 module.exports = {
-    API: 'https://wasipetbackend.herokuapp.com',
+    API: 'https://wasipetapp.com/api',
   };

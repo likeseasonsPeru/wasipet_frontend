@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 
-export default class LookPet extends Component {
+export default class LookTrade extends Component {
   constructor(props) {
     super(props);
     this.state = {
         modal: false,
-        name: props.name,
-        photo: props.photo,
-        age: props.age,
-        sex: props.sex,
-        owner: props.owner,
-        breed: props.breed,
+        tradecode: props.tradecode,
+        codeuser: props.codeuser,
+        storecode: props.storecode,
         fecha: new Date(props.fecha),
     };
 
@@ -39,78 +36,39 @@ export default class LookPet extends Component {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                id="photo"
-                label="Puntos total acumulados"
-                name="photo"
+                id="tradecode"
+                label="Código del Canje"
+                name="tradecode"
                 type="text"
                 autoFocus
                 disabled
-                value={this.state.photo}
+                value={this.state.tradecode}
                 className="colorInputDisabled"
               />
               <TextField
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                id="name"
-                label="Nombres y Apellidos"
-                name="name"
-                type="name"
+                id="codeuser"
+                label="Código de Usuario"
+                name="codeuser"
+                type="text"
                 autoFocus
                 disabled
-                value={this.state.name}
+                value={this.state.codeuser}
                 className="colorInputDisabled"
               />
               <TextField
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                id="age"
-                label="Edad"
-                name="age"
+                id="storecode"
+                label="Código de Tienda"
+                name="storecode"
                 type="text"
                 autoFocus
                 disabled
-                value={this.state.age}
-                className="colorInputDisabled"
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="sex"
-                label="Género"
-                name="sex"
-                type="text"
-                autoFocus
-                disabled
-                value={this.state.sex}
-                className="colorInputDisabled"
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="owner"
-                label="Código del dueño"
-                name="owner"
-                type="text"
-                autoFocus
-                disabled
-                value={this.state.owner}
-                className="colorInputDisabled"
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="breed"
-                label="Raza"
-                name="breed"
-                type="text"
-                autoFocus
-                disabled
-                value={this.state.breed}
+                value={this.state.storecode}
                 className="colorInputDisabled"
               />
               <TextField
