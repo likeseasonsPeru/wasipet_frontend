@@ -30,7 +30,7 @@ const register = ({ name, photo, email, phone, type_user, password, confirm_pass
     })
       .then((response) => {
         setCookie('token', response.data.token);
-        Router.push('/dashboard');
+        Router.push('/users');
         dispatch({type: AUTHENTICATE, payload: response.data.token});
       })
       .catch((err) => {
@@ -65,13 +65,13 @@ const authenticate = ({ email, password }, type) => {
       email : email,
       password: password
     };
-    axios.post(`${API}/${type}`, postData,{
+    axios.post(`${API}/login/adminWeb`, postData,{
       headers: headers
     })
       .then((response) => {
         //console.log(response);
         setCookie('token', response.data.token);
-        Router.push('/dashboard');
+        Router.push('/users');
         dispatch({type: AUTHENTICATE, payload: response.data.token});
       })
       .catch((err) => {

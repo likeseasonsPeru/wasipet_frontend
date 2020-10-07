@@ -7,20 +7,13 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import PetsIcon from '@material-ui/icons/Pets';
 import StorefrontIcon from '@material-ui/icons/Storefront';
+import HistoryIcon from '@material-ui/icons/History';
 import Link from 'next/link';
 
 export default class ListNav extends React.Component{
     render(){
       return(
-        <div>
-        <Link href="/dashboard">
-        <ListItem button>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText primary="Gráficas" />
-        </ListItem>
-        </Link>
+        <React.Fragment>
         <Link href="/users">
         <ListItem button>
           <ListItemIcon>
@@ -45,16 +38,15 @@ export default class ListNav extends React.Component{
           <ListItemText primary="Canjes" />
         </ListItem>
         </Link>
-        <Link href="/tiendas">
+        <Link href="/history">
         <ListItem button>
           <ListItemIcon>
-            <StorefrontIcon />
+            <HistoryIcon />
           </ListItemIcon>
-          <ListItemText primary="Tiendas" />
+          <ListItemText primary="Historial por Usuario" />
         </ListItem>
-        </Link>
-        
-      </div>
+        </Link>    
+      </React.Fragment>
       );
     }
 }

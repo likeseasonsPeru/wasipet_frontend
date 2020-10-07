@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 
-export default class LookTrade extends Component {
+export default class LookHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,7 +81,7 @@ export default class LookTrade extends Component {
                 type="text"
                 autoFocus
                 disabled
-                value={new Date(this.state.fecha).toLocaleString('es-PE')}
+                value={this.state.fecha}
                 className="colorInputDisabled"
               />
             </ModalBody>

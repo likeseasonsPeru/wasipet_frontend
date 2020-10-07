@@ -138,7 +138,7 @@ export default class LookUser extends Component {
                 type="text"
                 autoFocus
                 disabled
-                value={this.state.fecha}
+                value={new Date(this.state.fecha).toLocaleString('es-PE')}
                 className="colorInputDisabled"
               />
             </ModalBody>
