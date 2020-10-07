@@ -65,16 +65,19 @@ class TableTrades extends React.Component{
           .then(response => response.json())
           // ...then we update the users state
           .then(data =>
-            this.setState({ 
-              trades: data,
-              currentData:data.slice(
-                this.state.perPage * (this.state.currentPage - 1),
-                this.state.perPage * this.state.currentPage),
-              pages: data.length % this.state.perPage === 0 ? 
-              Math.floor(data.length/this.state.perPage) :
-              Math.floor(data.length/this.state.perPage) + 1,
-              isLoading: false,
-            })
+            {
+                const reverseData = data.reverse();
+                this.setState({ 
+                    trades: reverseData,
+                    currentData:reverseData.slice(
+                      this.state.perPage * (this.state.currentPage - 1),
+                      this.state.perPage * this.state.currentPage),
+                    pages: data.length % this.state.perPage === 0 ? 
+                    Math.floor(data.length/this.state.perPage) :
+                    Math.floor(data.length/this.state.perPage) + 1,
+                    isLoading: false,
+                  })
+            }
           )
           // Catch any errors we hit and update the app
           .catch(error => this.setState({ error, isLoading: false }));
@@ -97,16 +100,19 @@ class TableTrades extends React.Component{
           .then(response => response.json())
           // ...then we update the users state
           .then(data =>
-            this.setState({ 
-                currentData:data.slice(
-                    this.state.perPage * (this.state.currentPage - 1),
-                    this.state.perPage * this.state.currentPage),
-                pages: data.length % this.state.perPage === 0 ? 
-                  Math.floor(data.length/this.state.perPage) :
-                  Math.floor(data.length/this.state.perPage) + 1,
-                isLoading: false,
-                cancelSearch: true,
-              })
+            {
+                const reverseData = data.reverse();
+                this.setState({ 
+                    currentData:reverseData.slice(
+                        this.state.perPage * (this.state.currentPage - 1),
+                        this.state.perPage * this.state.currentPage),
+                    pages: data.length % this.state.perPage === 0 ? 
+                      Math.floor(data.length/this.state.perPage) :
+                      Math.floor(data.length/this.state.perPage) + 1,
+                    isLoading: false,
+                    cancelSearch: true,
+                  })
+            }
           )
           // Catch any errors we hit and update the app
           .catch(error => this.setState({ error, isLoading: false }));
@@ -241,8 +247,8 @@ class TableTrades extends React.Component{
                 <TableBody>
                 {!this.state.isLoading ? (
                     this.state.currentData.map((trade,index) => {
-                        const ItemSelected = this.isSelected(trade._id);
-                        const labelId = `enhanced-table-checkbox-${index}`;
+                        //const ItemSelected = this.isSelected(trade._id);
+                        //const labelId = `enhanced-table-checkbox-${index}`;
                         return(
                             <TableRow 
                                 hover 

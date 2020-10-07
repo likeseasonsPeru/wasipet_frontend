@@ -221,10 +221,11 @@ class TableHistory extends React.Component{
                                 </TableCell>
                                 <TableCell  align="center">
                                     <LookHistory
-                                    tradecode={historial.code_trade}
-                                    codeuser={historial.user}
-                                    storecode={historial.store}
-                                    fecha={historial.createdAt}
+                                    historialId={historial._id}
+                                    accionName={historial.name}
+                                    puntos={historial.ptos}
+                                    typeData={historial.type_data}
+                                    fecha={new Date(historial.date).toLocaleString('es-PE')}
                                     /> 
                                 </TableCell>
                             </TableRow>

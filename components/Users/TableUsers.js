@@ -9,6 +9,8 @@ import TableHead from '@material-ui/core/TableHead';
 import {Pagination} from '@material-ui/lab';
 import TableRow from '@material-ui/core/TableRow';
 import LookUser from './ViewDetailsUser';
+import ExportCSV from '../General/ExportExcel'
+import Grid from '@material-ui/core/Grid';
 
 const TableUsers = () =>{
 
@@ -44,9 +46,10 @@ const TableUsers = () =>{
           .then(response => response.json())
           // ...then we update the users state
           .then(data =>{
-            setUsers(data)
+            const reverseData = data.reverse()
+            setUsers(reverseData)
             setContentArray(
-              data.slice(
+                reverseData.slice(
                   perPage * (currentPage - 1),
                   perPage * currentPage)
             )
@@ -65,6 +68,15 @@ const TableUsers = () =>{
     
       return(
         <React.Fragment>
+            <Grid container direction="row" spacing={1} justify="flex-start"
+                    alignItems="center" >
+                    <Grid item xs={4}>
+                        <ExportCSV 
+                            csvData={users} 
+                            fileName={'usuarios-WASIPET'}  
+                        />
+                    </Grid>
+            </Grid>
         <TableContainer>
             <Table stickyHeader aria-label="sticky table">
             <TableHead>

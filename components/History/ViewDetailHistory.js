@@ -7,9 +7,10 @@ export default class LookHistory extends Component {
     super(props);
     this.state = {
         modal: false,
-        tradecode: props.tradecode,
-        codeuser: props.codeuser,
-        storecode: props.storecode,
+        historialId: props.historialId,
+        accionName: props.accionName,
+        puntos: props.puntos,
+        typeData: props.typeData,
         fecha: new Date(props.fecha),
     };
 
@@ -36,39 +37,52 @@ export default class LookHistory extends Component {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                id="tradecode"
-                label="Código del Canje"
-                name="tradecode"
+                id="historialId"
+                label="Código del Accion"
+                name="historialId"
                 type="text"
                 autoFocus
                 disabled
-                value={this.state.tradecode}
+                value={this.state.historialId}
                 className="colorInputDisabled"
               />
               <TextField
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                id="codeuser"
-                label="Código de Usuario"
-                name="codeuser"
+                id="accionName"
+                label="Nombre de la Acción"
+                name="accionName"
                 type="text"
                 autoFocus
                 disabled
-                value={this.state.codeuser}
+                value={this.state.accionName}
                 className="colorInputDisabled"
               />
               <TextField
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                id="storecode"
-                label="Código de Tienda"
-                name="storecode"
+                id="puntos"
+                label="Puntos"
+                name="puntos"
                 type="text"
                 autoFocus
                 disabled
-                value={this.state.storecode}
+                value={this.state.puntos}
+                className="colorInputDisabled"
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="type_data"
+                label="Tipo de acción"
+                name="type_data"
+                type="text"
+                autoFocus
+                disabled
+                value={this.state.typeData}
                 className="colorInputDisabled"
               />
               <TextField

@@ -178,7 +178,7 @@ class Trades extends React.Component {
        
         <Container maxWidth="lg" className={classes.container} style={{marginTop: '60px'}}>
           <h1>
-            Trades
+            Canjes
           </h1>
           <Grid container spacing={2}>
             <Grid item xs={12}  >
