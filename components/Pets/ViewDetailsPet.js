@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
             margin="normal"
             fullWidth="true"
             id="photo"
-            label="Puntos total acumulados"
+            label="Link de la foto"
             name="photo"
             type="text"
             autoFocus

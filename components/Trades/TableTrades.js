@@ -17,6 +17,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import {Pagination} from '@material-ui/lab';
 import Checkbox from '@material-ui/core/Checkbox';
 import ExportCSV from '../General/ExportExcel'
+import Router from 'next/router'
 class TableTrades extends React.Component{
     
     constructor(props) {
@@ -30,6 +31,7 @@ class TableTrades extends React.Component{
             perPage: 25,
             currentPage:1,
             pages:null,
+            page: 1,
             selectedTrades : [],
             currentData : [],
             cancelSearch: false,
@@ -39,6 +41,7 @@ class TableTrades extends React.Component{
         this.isSelected = this.isSelected.bind(this);
         this.handleCheckboxClick = this.handleCheckboxClick.bind(this);
         this.handleRowClick = this.handleRowClick.bind(this);
+        this.canjeRequested - this.canjeRequested.bind(this);
       }
 
       changePage = (page) => {
@@ -46,7 +49,8 @@ class TableTrades extends React.Component{
             {
                 currentData: this.state.trades.slice(
                     this.state.perPage * (page - 1),
-                    this.state.perPage * page)
+                    this.state.perPage * page),
+                page: page,
             }
         )
       }
@@ -145,6 +149,44 @@ class TableTrades extends React.Component{
       handleRowClick = (event, id) => {
         console.log("row link");
       };
+
+      canjeRequested = (id) => {
+        let canjes =[];
+        var headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.state.token
+        }
+        canjes.push(id);
+        console.log("canjeRequested -> canjes", canjes)
+        let data = {
+            canjes
+        }
+        console.log("canjeRequested -> data", data)
+        fetch(`${API}/canjesrequested`,{
+            method: 'PUT',
+            headers:headers,
+            body: JSON.stringify(data)
+        })
+          // We get the API response and receive data in JSON format...
+          .then(response => response.json())
+          // ...then we update the users state
+          .then(data => {
+              if(data.status === true){
+                Router.reload(window.location.pathname);
+                  /*let requestedCanje = data.canjes[0];
+                  console.log("requestedCanje", requestedCanje)
+                  this.state.currentData.map(trade=>{
+                      if(trade._id == requestedCanje._id){
+                          console.log('Trade por cambiar', trade)
+                          console.log('Canje Devuelto', requestedCanje)
+                          trade.requested = requestedCanje.requested
+                      }
+                  })*/
+              }
+          })
+          // Catch any errors we hit and update the app
+          .catch(error => console.log(error));
+      }
     
     render(){
         return(
@@ -219,7 +261,7 @@ class TableTrades extends React.Component{
                 <TableHead>
                     <TableRow >
                         <TableCell align="center">
-                            Código de Canje
+                            Orden
                         </TableCell>
                         <TableCell align="center">
                             Nombre de Usuario
@@ -231,6 +273,9 @@ class TableTrades extends React.Component{
                             RUC - Tienda Destino
                         </TableCell>
                         <TableCell align="center">
+                            Marca del Producto
+                        </TableCell>
+                        <TableCell align="center">
                             Producto
                         </TableCell>
                         <TableCell align="center">
@@ -238,6 +283,9 @@ class TableTrades extends React.Component{
                         </TableCell>
                         <TableCell align="center">
                             Estado del Pedido
+                        </TableCell>
+                        <TableCell align="center">
+                            Fecha de Canje
                         </TableCell>
                         <TableCell align="center">
                             Ver detalles
@@ -270,8 +318,8 @@ class TableTrades extends React.Component{
                                 </TableCell>
                                    */
                                }
-                                <TableCell key={trade.name} align="center">
-                                    {trade.code_trade}
+                                <TableCell key={index} align="center">
+                                    {this.state.perPage * (this.state.page - 1) + (index + 1)}
                                 </TableCell>
                                 <TableCell key={Math.random()} align="center">
                                     {trade.userName}
@@ -281,6 +329,9 @@ class TableTrades extends React.Component{
                                 </TableCell>
                                 <TableCell key={trade.email} align="center">
                                     {trade.store}
+                                </TableCell>
+                                <TableCell key={Math.random()} align="center" style={{fontWeight:'bold'}}>
+                                    {trade.brand}
                                 </TableCell>
                                 <TableCell key={Math.random()} align="center">
                                     {trade.fullname}
@@ -305,14 +356,21 @@ class TableTrades extends React.Component{
                                 </TableCell>
                                 <TableCell key={Math.random()} align="center">
                                     {
-                                        !trade.requested ? 
-                                        <Button variant="contained" color="secondary">
+                                        !trade.requested && trade.state !== 'Vencido' ? 
+                                        <Button variant="contained" color="secondary" onClick={()=> this.canjeRequested(trade._id)}>
                                             Sin procesar
+                                        </Button> :
+                                        trade.state === 'Vencido' ? 
+                                        <Button variant="contained" color="primary" disabled>
+                                            Vencido
                                         </Button> :
                                         <Button variant="contained" color="primary" disabled>
                                             Procesado
-                                        </Button>
+                                        </Button> 
                                     }
+                                </TableCell>
+                                <TableCell key={Math.random()} align="center">
+                                    {new Date(trade.createdAt).toLocaleString('es-PE')}
                                 </TableCell>
                                 <TableCell  align="center">
                                     <LookTrade

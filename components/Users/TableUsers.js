@@ -20,6 +20,7 @@ const TableUsers = () =>{
     const [error, setError] = useState(null)
     //Pagination
     const [perPage] = useState(25)
+    const [page,setPage] = useState(1)
     const [currentPage] = useState(1)
     const [pages, setPages] = useState(null)
     const [contentArray, setContentArray] = useState([])
@@ -30,6 +31,7 @@ const TableUsers = () =>{
                 perPage * (page - 1),
                 perPage * page)
         )
+        setPage(page)
     }
 
       useEffect(() => {
@@ -76,16 +78,22 @@ const TableUsers = () =>{
                             fileName={'usuarios-WASIPET'}  
                         />
                     </Grid>
+                    <Grid item xs={4} alignItems={'right'}>
+                        Total: {users.length} usuarios registrados
+                    </Grid>
             </Grid>
         <TableContainer>
             <Table stickyHeader aria-label="sticky table">
             <TableHead>
                 <TableRow >
                     <TableCell align="center">
+                        Orden
+                    </TableCell>
+                    <TableCell align="center">
                         Nombre
                     </TableCell>
                     <TableCell align="center">
-                        Tipo
+                        Puntos Actuales
                     </TableCell>
                     <TableCell align="center">
                         Email
@@ -94,20 +102,26 @@ const TableUsers = () =>{
                         Teléfono
                     </TableCell>
                     <TableCell align="center">
+                        Fecha de registro
+                    </TableCell>
+                    <TableCell align="center">
                         Ver detalles
                     </TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
             {!isLoading ? (
-                contentArray.map((user) => {
+                contentArray.map((user,index) => {
                     return(
                         <TableRow hover role="checkbox" key={user._id}>
-                            <TableCell key={user.name} align="center">
-                                {user.name}
+                            <TableCell key={index} align="center">
+                                {perPage * (page - 1) + (index + 1)}
                             </TableCell>
-                            <TableCell key={user.type} align="center">
-                                {user.type}
+                            <TableCell key={user.name} align="center">
+                                {user.name + ' ' + user.surname}
+                            </TableCell>
+                            <TableCell key={Math.random()} align="center">
+                                {user.points}
                             </TableCell>
                             <TableCell key={user.email} align="center">
                                 {user.email}
@@ -115,16 +129,19 @@ const TableUsers = () =>{
                             <TableCell key={user.phone} align="center">
                                 {user.phone}
                             </TableCell>
+                            <TableCell key={user.createdAt} align="center">
+                                {new Date(user.createdAt).toLocaleString('es-PE')}
+                            </TableCell>
                             <TableCell key={user.user_id} align="center">
                                 <LookUser
-                                name={user.name}
+                                name={user.name + ' ' + user.surname}
                                 points={user.points}
                                 type={user.type}
                                 phone={user.phone}
                                 photo={user.photo}
                                 email={user.email}
                                 user_id={user.user_id}
-                                fecha={user.createdAt}
+                                fecha={new Date(user.createdAt).toLocaleString('es-PE')}
                                 /> 
                             </TableCell>
                         </TableRow>
