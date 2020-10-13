@@ -18,6 +18,7 @@ const TableUsers = () =>{
     const [users, setUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [downloadUsers, setDownloadUsers] = useState([])
     //Pagination
     const [perPage] = useState(25)
     const [page,setPage] = useState(1)
@@ -32,6 +33,23 @@ const TableUsers = () =>{
                 perPage * page)
         )
         setPage(page)
+    }
+
+    const formatUsers = async (users) => {
+       let newDownload = await users.map(user => {
+            var newObj = {}
+            newObj['ID del Usuario'] = user.user_id
+            newObj['Nombres'] = user.name
+            newObj['Apellidos'] = user.surname
+            newObj['Correo electrónico'] = user.email
+            newObj['Puntos'] = user.points
+            newObj['Teléfono'] = user.phone
+            newObj['DNI'] = user.DNI
+            newObj['Foto'] = user.photo
+            newObj['Fecha de registro'] = new Date(user.createdAt).toLocaleString('es-PE')
+            return newObj;
+        })
+        setDownloadUsers(newDownload)
     }
 
       useEffect(() => {
@@ -61,6 +79,7 @@ const TableUsers = () =>{
               Math.floor(data.length/perPage) + 1
             )
             setIsLoading(false)
+            formatUsers(data)
         }
             
           )
@@ -74,7 +93,7 @@ const TableUsers = () =>{
                     alignItems="center" >
                     <Grid item xs={4}>
                         <ExportCSV 
-                            csvData={users} 
+                            csvData={downloadUsers} 
                             fileName={'usuarios-WASIPET'}  
                         />
                     </Grid>

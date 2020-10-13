@@ -34,6 +34,7 @@ class TableTrades extends React.Component{
             page: 1,
             selectedTrades : [],
             currentData : [],
+            downloadTrades:[],
             cancelSearch: false,
         };
         this.searchByEmail = this.searchByEmail.bind(this);
@@ -42,6 +43,7 @@ class TableTrades extends React.Component{
         this.handleCheckboxClick = this.handleCheckboxClick.bind(this);
         this.handleRowClick = this.handleRowClick.bind(this);
         this.canjeRequested - this.canjeRequested.bind(this);
+        this.formatTrades = this.formatTrades.bind(this);
       }
 
       changePage = (page) => {
@@ -54,6 +56,23 @@ class TableTrades extends React.Component{
             }
         )
       }
+       formatTrades = async (trades) => {
+        let newDownload = await trades.map(trade => {
+             var newObj = {}
+             newObj['Nombres y Apellidos'] = trade.userName
+             newObj['Correo electrónico'] = trade.userEmail
+             newObj['Teléfono'] = trade.userPhone
+             newObj['RUC de la tienda'] = trade.store
+             newObj['Tipo del producto'] = trade.type
+             newObj['Marca del producto'] = trade.brand
+             newObj['Producto canjeado'] = trade.fullname
+             newObj['Fecha de registro'] = new Date(trade.createdAt).toLocaleString('es-PE')
+             return newObj;
+         })
+         this.setState({
+             downloadTrades : newDownload
+         })
+        }
 
       componentDidMount() {
         var headers = {
@@ -81,6 +100,7 @@ class TableTrades extends React.Component{
                     Math.floor(data.length/this.state.perPage) + 1,
                     isLoading: false,
                   })
+                  this.formatTrades(data)
             }
           )
           // Catch any errors we hit and update the app
@@ -248,7 +268,7 @@ class TableTrades extends React.Component{
                     </Grid>
                     <Grid item xs={4}>
                         <ExportCSV 
-                            csvData={this.state.trades} 
+                            csvData={this.state.downloadTrades} 
                             fileName={'trades-WASIPET'}  
                         />
                     </Grid>
