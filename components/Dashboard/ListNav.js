@@ -8,6 +8,8 @@ import PeopleIcon from '@material-ui/icons/People';
 import PetsIcon from '@material-ui/icons/Pets';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import HistoryIcon from '@material-ui/icons/History';
+import BrandingWatermarkIcon from '@material-ui/icons/BrandingWatermark';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import Link from 'next/link';
 
 export default class ListNav extends React.Component{
@@ -45,7 +47,23 @@ export default class ListNav extends React.Component{
           </ListItemIcon>
           <ListItemText primary="Historial por Usuario" />
         </ListItem>
-        </Link>    
+        </Link>
+        <Link href="/brands">
+        <ListItem button>
+          <ListItemIcon>
+            <BrandingWatermarkIcon />
+          </ListItemIcon>
+          <ListItemText primary="Marcas" />
+        </ListItem>
+        </Link>
+        <Link href="/products">
+        <ListItem button>
+          <ListItemIcon>
+            <MenuBookIcon />
+          </ListItemIcon>
+          <ListItemText primary="Productos" />
+        </ListItem>
+        </Link>
       </React.Fragment>
       );
     }
