@@ -80,9 +80,10 @@ class TableHistory extends React.Component{
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.state.token
         }
-        fetch(`${API}/user/userHistorial/${this.state.emailSearch}`,{
-            method: 'GET',
-            headers:headers
+        fetch(`${API}/user/userHistorial`,{
+            method: 'POST',
+            headers:headers,
+            body: JSON.stringify({email: this.state.emailSearch})
         })
           // We get the API response and receive data in JSON format...
           .then(response => response.json())
