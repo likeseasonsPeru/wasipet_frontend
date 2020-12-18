@@ -11,15 +11,15 @@ import TableRow from "@material-ui/core/TableRow";
 //import LookUser from './ViewDetailsUser';
 import ExportCSV from "../General/ExportExcel";
 import Grid from "@material-ui/core/Grid";
-import EditBrand from "./EditBrand";
-import AddBrand from "./AddBrand";
+import EditBanner from "./EditBanner";
+import RemoveBanner from "./RemoveBanner";
+import AddBanner from "./AddBanner";
 
-const TableBrands = () => {
+const TableBanners = () => {
   const [token] = useState(getCookie("token"));
-  const [brands, setBrands] = useState([]);
+  const [banners, setBanners] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [downloadBrands, setDownloadBrands] = useState([]);
   //Pagination
   const [perPage] = useState(25);
   const [page, setPage] = useState(1);
@@ -28,22 +28,8 @@ const TableBrands = () => {
   const [contentArray, setContentArray] = useState([]);
 
   const changePage = page => {
-    setContentArray(brands.slice(perPage * (page - 1), perPage * page));
+    setContentArray(banners.slice(perPage * (page - 1), perPage * page));
     setPage(page);
-  };
-
-  const formatBrands = async brands => {
-    let newDownload = await brands.map(brand => {
-      var newObj = {};
-      newObj["ID de Marca"] = brand._id;
-      newObj["Nombre de la marca"] = brand.name;
-      newObj["URL del logo"] = brand.photo;
-      newObj["Fecha de registro"] = new Date(brand.createdAt).toLocaleString(
-        "es-PE"
-      );
-      return newObj;
-    });
-    setDownloadBrands(newDownload);
   };
 
   useEffect(() => {
@@ -52,7 +38,7 @@ const TableBrands = () => {
       Authorization: "Bearer " + token
     };
     // Where we're fetching data from
-    fetch(`${API}/brands`, {
+    fetch(`${API}/bannersWasi`, {
       method: "GET",
       headers: headers
     })
@@ -61,7 +47,7 @@ const TableBrands = () => {
       // ...then we update the users state
       .then(data => {
         const reverseData = data.reverse();
-        setBrands(reverseData);
+        setBanners(reverseData);
         setContentArray(
           reverseData.slice(perPage * (currentPage - 1), perPage * currentPage)
         );
@@ -71,7 +57,6 @@ const TableBrands = () => {
             : Math.floor(data.length / perPage) + 1
         );
         setIsLoading(false);
-        formatBrands(data);
       })
       // Catch any errors we hit and update the app
       .catch(error => setError(error));
@@ -86,14 +71,14 @@ const TableBrands = () => {
         justify="flex-start"
         alignItems="center"
       >
-        <Grid item xs={4}>
+        {/* <Grid item xs={4}>
           <ExportCSV csvData={downloadBrands} fileName={"marcas-WASIPET"} />
         </Grid>
         <Grid item xs={4} alignItems={"right"}>
           Total: {brands.length} marcas registradas
-        </Grid>
+        </Grid> */}
         <Grid item xs={4}>
-          <AddBrand />
+          <AddBanner />
         </Grid>
       </Grid>
       <TableContainer>
@@ -101,35 +86,42 @@ const TableBrands = () => {
           <TableHead>
             <TableRow>
               <TableCell align="center">Orden</TableCell>
-              <TableCell align="center">Nombre</TableCell>
+              <TableCell align="center">Titulo</TableCell>
               <TableCell align="center">Foto</TableCell>
               <TableCell align="center">Fecha de registro</TableCell>
+              <TableCell align="center">Acción</TableCell>
               <TableCell align="center">Acción</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {!isLoading ? (
-              contentArray.map((brand, index) => {
+              contentArray.map((banner, index) => {
                 return (
-                  <TableRow hover role="checkbox" key={brand._id}>
+                  <TableRow hover role="checkbox" key={banner._id}>
                     <TableCell key={index} align="center">
                       {perPage * (page - 1) + (index + 1)}
                     </TableCell>
-                    <TableCell key={brand.name} align="center">
-                      {brand.name}
+                    <TableCell key={banner.title} align="center">
+                      {banner.title}
                     </TableCell>
                     <TableCell key={Math.random()} align="center">
-                      {brand.photo ? (
-                        <img src={brand.photo} style={{ width: "40px" }} />
+                      {banner.imagen ? (
+                        <img
+                          src={`https://wasipetapp.com/api/public/${banner.imagen}`}
+                          style={{ width: "40px" }}
+                        />
                       ) : (
                         "Sin foto"
                       )}
                     </TableCell>
-                    <TableCell key={brand.createdAt} align="center">
-                      {new Date(brand.createdAt).toLocaleString("es-PE")}
+                    <TableCell key={banner.createdAt} align="center">
+                      {new Date(banner.createdAt).toLocaleString("es-PE")}
                     </TableCell>
                     <TableCell key={Math.random()} align="center">
-                      <EditBrand brand={brand} />
+                      <EditBanner banner={banner} />
+                    </TableCell>
+                    <TableCell key={Math.random()} align="center">
+                      <RemoveBanner banner={banner} />
                     </TableCell>
                   </TableRow>
                 );
@@ -147,4 +139,4 @@ const TableBrands = () => {
   );
 };
 
-export default TableBrands;
+export default TableBanners;

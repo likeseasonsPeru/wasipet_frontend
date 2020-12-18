@@ -124,7 +124,7 @@ const TableProducts = () =>{
                         />
                     </Grid>
                     <Grid item xs={4} alignItems={'right'}>
-                        Total: {products.length} marcas registradas
+                        Total: {products.length} productos registrados
                     </Grid>
                     <Grid item xs={4}>
                         <AddProduct brands={brands} />
