@@ -290,7 +290,7 @@ const AddProduct = ({
                     style={{width: '100%'}}
                     >
                         <MenuItem value="" disabled>
-                            Seleccione marca
+                            Seleccione categoria
                         </MenuItem>
                         {
                           SELECT_OPTIONS ? 
@@ -310,9 +310,9 @@ const AddProduct = ({
                     multiple={multiSelect}
                     style={{width: '100%'}}
                     >
-                        <MenuItem value="" disabled>
+                        {/* <MenuItem value="" disabled>
                             Seleccione SubCategoria
-                        </MenuItem>
+                        </MenuItem> */}
                         {
                           options_TypeDescription ? 
                           options_TypeDescription.map(subcategory => 

@@ -10,6 +10,7 @@ import StorefrontIcon from "@material-ui/icons/Storefront";
 import HistoryIcon from "@material-ui/icons/History";
 import BrandingWatermarkIcon from "@material-ui/icons/BrandingWatermark";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
+import BlockIcon from '@material-ui/icons/Block';
 import RecentActorsSharpIcon from '@material-ui/icons/RecentActorsSharp';
 import AnnouncementSharpIcon from '@material-ui/icons/AnnouncementSharp';
 import Link from "next/link";
@@ -80,6 +81,14 @@ export default class ListNav extends React.Component {
               <AnnouncementSharpIcon />
             </ListItemIcon>
             <ListItemText primary="Mensajes" />
+          </ListItem>
+        </Link>
+        <Link href="/blockUser">
+          <ListItem button>
+            <ListItemIcon>
+              <BlockIcon />
+            </ListItemIcon>
+            <ListItemText primary="blockuser" />
           </ListItem>
         </Link>
       </React.Fragment>
