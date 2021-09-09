@@ -19,7 +19,7 @@ const EditBrand = ({ brand }) => {
   const [experimentoCyber, imageExperimentInput, setInputFile] = useImageForm({
     placeholder: "Ingrese la imagen de la marca",
     name: "image",
-    label: "Sube una imagen (Medida recomendada: 400x400px)",
+    label: "Sube una imagen (Medida recomendada: 300x300px)",
     medida: "Medida recomendada:"
   });
 

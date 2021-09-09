@@ -20,7 +20,7 @@ const AddBanner = () => {
   const [experimentoCyber, imageExperimentInput, setInputFile] = useImageForm({
     placeholder: "Ingrese la imagen del banner",
     name: "image",
-    label: "Sube una imagen (Medida recomendada: 400x400px)",
+    label: "Sube una imagen (Medida recomendada: 474x200px)",
     medida: "Medida recomendada:"
   });
   const [errorMessage, setErrorMessage] = useState(false);
