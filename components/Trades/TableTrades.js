@@ -12,10 +12,12 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import SearchIcon from "@material-ui/icons/Search";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { Pagination } from "@material-ui/lab";
 import Checkbox from "@material-ui/core/Checkbox";
+import { Select, MenuItem } from "@material-ui/core";
 import ExportCSV from "../General/ExportExcel";
 import Router from "next/router";
 class TableTrades extends React.Component {
@@ -34,6 +36,8 @@ class TableTrades extends React.Component {
       selectedTrades: [],
       currentData: [],
       downloadTrades: [],
+      modal: false,
+      idCanjetoReturn: null,
       cancelSearch: false,
     };
     this.searchByEmail = this.searchByEmail.bind(this);
@@ -41,9 +45,19 @@ class TableTrades extends React.Component {
     this.isSelected = this.isSelected.bind(this);
     this.handleCheckboxClick = this.handleCheckboxClick.bind(this);
     this.handleRowClick = this.handleRowClick.bind(this);
-    this.canjeRequested - this.canjeRequested.bind(this);
+    this.canjeRequested = this.canjeRequested.bind(this);
+    this.sendChanges = this.sendChanges.bind(this);
+    this.returnTrade = this.returnTrade.bind(this);
+    this.setStateTrade = this.setStateTrade.bind(this);
+    this.toggle = this.toggle.bind(this);
     this.formatTrades = this.formatTrades.bind(this);
   }
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
 
   changePage = (page) => {
     this.setState({
@@ -171,6 +185,62 @@ class TableTrades extends React.Component {
     console.log("row link");
   };
 
+  setStateTrade = (value, id) => {
+    const { currentData } = this.state;
+    const indexFound = currentData.findIndex((trade) => trade._id == id);
+    if (indexFound !== -1) {
+      currentData[indexFound].newState = value;
+      this.setState({
+        currentData,
+      });
+    }
+  };
+
+  sendChanges = async (trade) => {
+    var headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + this.state.token,
+    };
+    await fetch(`${API}/canje/${trade._id}`, {
+      method: "PUT",
+      headers: headers,
+      body: JSON.stringify({ newState: trade.newState }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log("El error es ", err);
+      });
+  };
+
+  returnTrade = async () => {
+    const id = this.state.idCanjetoReturn;
+    if (id) {
+      var headers = {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.state.token,
+      };
+
+      this.setStateTrade("No canjeado", id);
+
+      await fetch(`${API}/canjes/setState/${id}`, {
+        method: "PUT",
+        headers: headers,
+        body: JSON.stringify({ newState: "No canjeado" }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log("El error es ", err);
+        });
+    }
+    this.toggle()
+  };
+
   canjeRequested = (id) => {
     let canjes = [];
     var headers = {
@@ -212,6 +282,30 @@ class TableTrades extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          style={{ marginTop: "90px" }}
+        >
+          <ModalHeader toggle={this.toggle}>
+            ¿ Desea devolver el canje ?
+          </ModalHeader>
+          <ModalBody className="text-center">
+            <h5>
+              Al devolver el canje se le regresaran los puntos al usuario y no
+              se podra volver a cambiar el estado del canje
+              <br />
+            </h5>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.returnTrade}>
+              Confirmar
+            </Button>
+            <Button color="secondary" onClick={this.toggle}>
+              Cerrar
+            </Button>
+          </ModalFooter>
+        </Modal>
         {!this.state.isLoading ? (
           <Grid
             container
@@ -298,8 +392,10 @@ class TableTrades extends React.Component {
                 <TableCell align="center">RUC - Tienda Destino</TableCell>
                 <TableCell align="center">Marca del Producto</TableCell>
                 <TableCell align="center">Producto</TableCell>
-                <TableCell align="center">Estado en APP</TableCell>
-                <TableCell align="center">Estado del Pedido</TableCell>
+                {/* <TableCell align="center">Estado en app Antiguo</TableCell> */}
+                <TableCell align="center">Estado en App</TableCell>
+                <TableCell align="center">Guardar Cambios</TableCell>
+                <TableCell align="center">Devolver puntos</TableCell>
                 <TableCell align="center">Fecha de Canje</TableCell>
                 <TableCell align="center">Ver detalles</TableCell>
               </TableRow>
@@ -351,7 +447,7 @@ class TableTrades extends React.Component {
                       <TableCell key={Math.random()} align="center">
                         {trade.fullname}
                       </TableCell>
-                      <TableCell key={Math.random()} align="center">
+                      {/* <TableCell key={Math.random()} align="center">
                         {trade.state === "Vencido" ? (
                           <div style={{ color: "red", fontWeight: "bold" }}>
                             {trade.state}
@@ -369,12 +465,71 @@ class TableTrades extends React.Component {
                             {trade.state}
                           </div>
                         )}
+                      </TableCell> */}
+                      <TableCell key={Math.random()} align="center">
+                        <Select
+                          value={
+                            trade.state == "Vencido" ||
+                            trade.state == "Entregado"
+                              ? trade.state
+                              : trade.newState
+                          }
+                          labelId="label-brand"
+                          disabled={
+                            trade.state == "Vencido" ||
+                            trade.state == "Entregado" ||
+                            trade.newState == "No canjeado"
+                          }
+                          onChange={(e) =>
+                            this.setStateTrade(e.target.value, trade._id)
+                          }
+                          displayEmpty
+                          style={{ width: "100%" }}
+                        >
+                          <MenuItem value="" disabled>
+                            Seleccione un estado
+                          </MenuItem>
+                          <MenuItem value={"En proceso"}>
+                            <div style={{ color: "gray", fontWeight: "bold" }}>
+                              En proceso
+                            </div>
+                          </MenuItem>
+                          <MenuItem value={"Confirmado"}>
+                            <div
+                              style={{ color: "orange", fontWeight: "bold" }}
+                            >
+                              Confirmado
+                            </div>
+                          </MenuItem>
+                          <MenuItem value={"En camino"}>
+                            <div style={{ color: "blue", fontWeight: "bold" }}>
+                              En camino
+                            </div>
+                          </MenuItem>
+                          {trade.state == "Vencido" && (
+                            <MenuItem value={"Vencido"} disabled>
+                              <div style={{ color: "red", fontWeight: "bold" }}>
+                                Vencido
+                              </div>
+                            </MenuItem>
+                          )}
+                          <MenuItem value={"Entregado"} disabled>
+                            <div style={{ color: "green", fontWeight: "bold" }}>
+                              Entregado
+                            </div>
+                          </MenuItem>
+                          <MenuItem value={"No canjeado"} disabled>
+                            <div style={{ color: "red", fontWeight: "bold" }}>
+                              No canjeado
+                            </div>
+                          </MenuItem>
+                        </Select>
                       </TableCell>
                       <TableCell key={Math.random()} align="center">
-                        {!trade.requested && trade.state !== "Vencido" ? (
+                        {/* {!trade.requested && trade.state !== "Vencido" ? (
                           <Button
                             variant="contained"
-                            color="secondary"
+                            color="Info"
                             onClick={() => this.canjeRequested(trade._id)}
                           >
                             Sin procesar
@@ -386,6 +541,35 @@ class TableTrades extends React.Component {
                         ) : (
                           <Button variant="contained" color="primary" disabled>
                             Procesado
+                          </Button>
+                        )} */}
+                        <Button
+                          variant="contained"
+                          color="Info"
+                          onClick={() => this.sendChanges(trade)}
+                        >
+                          Guardar cambios
+                        </Button>
+                      </TableCell>
+                      <TableCell key={Math.random()} align="center">
+                        {trade.state !== "Vencido" &&
+                        trade.state !== "Entregado" &&
+                        trade.newState !== "No canjeado" ? (
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => {
+                              this.setState({
+                                idCanjetoReturn: trade._id,
+                              });
+                              this.toggle();
+                            }}
+                          >
+                            Devolver Canje
+                          </Button>
+                        ) : (
+                          <Button variant="contained" color="primary" disabled>
+                            Devolver Canje
                           </Button>
                         )}
                       </TableCell>
