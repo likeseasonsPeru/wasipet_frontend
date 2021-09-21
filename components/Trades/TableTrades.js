@@ -223,12 +223,12 @@ class TableTrades extends React.Component {
         Authorization: "Bearer " + this.state.token,
       };
 
-      this.setStateTrade("No canjeado", id);
+      this.setStateTrade("Proceso cancelado", id);
 
       await fetch(`${API}/canjes/setState/${id}`, {
         method: "PUT",
         headers: headers,
-        body: JSON.stringify({ newState: "No canjeado" }),
+        body: JSON.stringify({ newState: "Proceso cancelado" }),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -478,7 +478,7 @@ class TableTrades extends React.Component {
                           disabled={
                             trade.state == "Vencido" ||
                             trade.state == "Entregado" ||
-                            trade.newState == "No canjeado"
+                            trade.newState == "Proceso cancelado"
                           }
                           onChange={(e) =>
                             this.setStateTrade(e.target.value, trade._id)
@@ -518,9 +518,9 @@ class TableTrades extends React.Component {
                               Entregado
                             </div>
                           </MenuItem>
-                          <MenuItem value={"No canjeado"} disabled>
+                          <MenuItem value={"Proceso cancelado"} disabled>
                             <div style={{ color: "red", fontWeight: "bold" }}>
-                              No canjeado
+                              Proceso cancelado
                             </div>
                           </MenuItem>
                         </Select>
@@ -554,7 +554,7 @@ class TableTrades extends React.Component {
                       <TableCell key={Math.random()} align="center">
                         {trade.state !== "Vencido" &&
                         trade.state !== "Entregado" &&
-                        trade.newState !== "No canjeado" ? (
+                        trade.newState !== "Proceso cancelado" ? (
                           <Button
                             variant="contained"
                             color="secondary"
