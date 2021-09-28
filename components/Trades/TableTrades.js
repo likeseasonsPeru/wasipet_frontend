@@ -215,7 +215,7 @@ class TableTrades extends React.Component {
       });
   };
 
-  returnTrade = async () => {
+  returnTrade = async (newState) => {
     const id = this.state.idCanjetoReturn;
     if (id) {
       var headers = {
@@ -223,12 +223,12 @@ class TableTrades extends React.Component {
         Authorization: "Bearer " + this.state.token,
       };
 
-      this.setStateTrade("Proceso cancelado", id);
+      this.setStateTrade(newState, id);
 
       await fetch(`${API}/canjes/setState/${id}`, {
         method: "PUT",
         headers: headers,
-        body: JSON.stringify({ newState: "Proceso cancelado" }),
+        body: JSON.stringify({ newState: newState }),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -298,7 +298,7 @@ class TableTrades extends React.Component {
             </h5>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.returnTrade}>
+            <Button color="primary" onClick={() =>  this.returnTrade('Proceso cancelado (puntos devueltos)')}>
               Confirmar
             </Button>
             <Button color="secondary" onClick={this.toggle}>
@@ -478,7 +478,7 @@ class TableTrades extends React.Component {
                           disabled={
                             trade.state == "Vencido" ||
                             trade.state == "Entregado" ||
-                            trade.newState == "Proceso cancelado"
+                            trade.newState == "Proceso cancelado (puntos devueltos)" || trade.newState == "Entregado"
                           }
                           onChange={(e) =>
                             this.setStateTrade(e.target.value, trade._id)
@@ -506,6 +506,11 @@ class TableTrades extends React.Component {
                               En camino
                             </div>
                           </MenuItem>
+                          <MenuItem value={"Proceso cancelado (Sin stock)"}>
+                            <div style={{ color: "indigo", fontWeight: "bold" }}>
+                              Sin stock
+                            </div>
+                          </MenuItem>
                           {trade.state == "Vencido" && (
                             <MenuItem value={"Vencido"} disabled>
                               <div style={{ color: "red", fontWeight: "bold" }}>
@@ -518,9 +523,9 @@ class TableTrades extends React.Component {
                               Entregado
                             </div>
                           </MenuItem>
-                          <MenuItem value={"Proceso cancelado"} disabled>
+                          <MenuItem value={"Proceso cancelado (puntos devueltos)"} disabled>
                             <div style={{ color: "red", fontWeight: "bold" }}>
-                              Proceso cancelado
+                            Puntos devueltos
                             </div>
                           </MenuItem>
                         </Select>
@@ -554,7 +559,7 @@ class TableTrades extends React.Component {
                       <TableCell key={Math.random()} align="center">
                         {trade.state !== "Vencido" &&
                         trade.state !== "Entregado" &&
-                        trade.newState !== "Proceso cancelado" ? (
+                        trade.newState !== "Proceso cancelado (puntos devueltos)" ? (
                           <Button
                             variant="contained"
                             color="secondary"
