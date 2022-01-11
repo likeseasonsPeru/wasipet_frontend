@@ -16,6 +16,7 @@ const AddBanner = () => {
   const [token] = useState(getCookie("token"));
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("")
 
   const [experimentoCyber, imageExperimentInput, setInputFile] = useImageForm({
     placeholder: "Ingrese la imagen del banner",
@@ -35,9 +36,10 @@ const AddBanner = () => {
   }, [title, experimentoCyber])
 
   const addBanner = async () => {
-    if (title && experimentoCyber) {
+    if (title && experimentoCyber && url) {
       const data = {
         title,
+        link: url,
         image: experimentoCyber //image
       };
       try {
@@ -93,6 +95,21 @@ const AddBanner = () => {
               autoFocus
               onChange={e => setTitle(e.target.value)}
               value={title}
+              className="colorInputDisabled"
+            />
+          </FormControl>
+          <FormControl style={{ width: "100%" }}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="url"
+              label="Agregar el url del banner"
+              name="url"
+              type="text"
+              autoFocus
+              onChange={e => setUrl(e.target.value)}
+              value={url}
               className="colorInputDisabled"
             />
           </FormControl>
