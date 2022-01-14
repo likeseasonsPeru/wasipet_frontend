@@ -22,6 +22,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ListNav from "../components/Dashboard/ListNav";
 import { Button, TabPane, TabContent, Nav, NavItem, NavLink } from "reactstrap";
 import TableBanners from "../components/Banners/TableBanners";
+import TableBannersBussiness from "../components/Banners/BannersBusiness/TableBanners";
 const drawerWidth = 240;
 const classes = (theme) => ({
   root: {
@@ -214,7 +215,7 @@ class Banners extends React.Component {
                   <Nav tabs>
                     <NavItem>
                       <NavLink
-                        className="active"
+                        className={this.state.activeTab === '1'? 'active': ''} 
                         onClick={() => { this.toggle('1'); }}
                       >
                         Banners Cliente
@@ -222,7 +223,7 @@ class Banners extends React.Component {
                     </NavItem>
                     <NavItem>
                       <NavLink 
-                        className="" 
+                        className={this.state.activeTab === '2'? 'active': ''} 
                         onClick={() => { this.toggle('2'); }}
                       >
                         Banners Business
@@ -234,7 +235,7 @@ class Banners extends React.Component {
                       <TableBanners />
                     </TabPane>
                     <TabPane tabId="2">
-                      <h1>Prueba</h1>
+                      <TableBannersBussiness />
                     </TabPane>
                   </TabContent>
                 </Paper>
