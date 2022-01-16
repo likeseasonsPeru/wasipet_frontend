@@ -22,11 +22,8 @@ export default class LookTrade extends Component {
         modal: !this.state.modal
       });
   }
-
-
   render() {
     return (
-
         <div>
             <Button color="info" onClick={this.toggle} >Ver Info</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} style={{marginTop:"90px"}}>

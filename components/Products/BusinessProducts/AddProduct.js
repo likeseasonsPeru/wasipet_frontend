@@ -29,62 +29,20 @@ const AddProductBusiness = ({ brands }) => {
     medida: "Medida recomendada:",
   });
 
+  const [errorMessage, setErrorMessage] = useState(false);
   //Select Filtros
   const [category, setCategory] = useState("");
-  /*  const [multiSelect, setMultiSelect] = useState(false)
-        const [options_TypeDescription, setOptions_TypeDescription] = useState(null)
-        const [typeDescription, setTypeDescription] = useState('')
-        const [options_TypeDetailCategory, setOptions_TypeDetailCategory] = useState(null)
-        const [typeDetailCategory, setTypeDetailCategory] = useState('')
-        const [options_TypeDetailDescription, setOptions_TypeDetailDescription] = useState(null)
-        const [typeDetailDescription, setTypeDetailDescription] = useState('') */
-  /* React.useEffect(() => {
-          setOptions_TypeDetailCategory(null);
-          setOptions_TypeDetailDescription(null);
-          const options_subcategory = SELECT_OPTIONS.filter(categoria => categoria.name === category)
-
-           //type_description
-          if(options_subcategory.length){
-            if(options_subcategory[0].multiselect === true){
-              setMultiSelect(true)
-              let valuesSelect ;
-              if(typeof typeDescription === 'object'){
-                valuesSelect = typeDescription;
-              }else{
-                valuesSelect = typeDescription.split(',');  
-              }
-              setTypeDescription(valuesSelect)
-
-            }else{
-              setMultiSelect(false)
-            }
-            setOptions_TypeDescription(options_subcategory[0].categories)
-          }
-          let object_subcategories =[]
-          //type_detail_category
-          if(options_subcategory.length){
-            const categories = options_subcategory[0].categories
-             object_subcategories = categories.filter(subcategory => subcategory.name === typeDescription)
-            if(object_subcategories.length){
-              if(object_subcategories && typeof object_subcategories[0].subcategories != null){
-                setOptions_TypeDetailCategory(object_subcategories[0].subcategories);
-              }
-            }
-          }
-
-          //type_detail_description
-          if(options_subcategory.length && object_subcategories.length && typeDetailCategory){
-            const subcategories = object_subcategories[0].subcategories
-            if(subcategories.length){
-              const subcategories_description = subcategories.filter(subcategory_description => subcategory_description.name === typeDetailCategory)
-              if(subcategories_description.length){
-                if(subcategories_description && typeof subcategories_description[0].subcategories_description != null){
-                  setOptions_TypeDetailDescription(subcategories_description[0].subcategories_description);
-                }
-              }
-            }
-          }
-        }, [category, typeDescription, typeDetailCategory]) */
+  React.useEffect(() => {
+    setErrorMessage(false);
+  }, [
+    name,
+    brand,
+    description,
+    petType,
+    pointsTrade,
+    experimentoCyber,
+    category,
+  ]);
 
   const toggle = () => {
     //this.getUser();
@@ -92,42 +50,51 @@ const AddProductBusiness = ({ brands }) => {
   };
 
   const addProduct = async () => {
-    const data = {
-      name,
-      brand,
-      active: false,
-      description,
-      petType,
-      pointsTrade,
-      image: experimentoCyber, //image
-      category,
-      /* type_description: typeof typeDescription === 'object' ? typeDescription.join(',') : typeDescription,
-              type_detail_category: typeDetailCategory,
-              type_detail_description: typeDetailDescription, */
-    };
-    try {
-      var headers = {
-        Authorization: "Bearer " + token,
+    if (
+      name &&
+      brand &&
+      description &&
+      petType &&
+      pointsTrade &&
+      experimentoCyber &&
+      category
+    ) {
+      const data = {
+        name,
+        brand,
+        active: false,
+        description,
+        petType,
+        pointsTrade,
+        image: experimentoCyber, //image
+        category,
       };
-      let dataToSend = new FormData();
-      Object.keys(data).forEach((key) => {
-        console.log("Key->", key);
-        dataToSend.append(key, data[key]);
-      });
-      // Where we're fetching data from
-      await fetch(`${API}/product`, {
-        method: "POST",
-        headers: headers,
-        body: dataToSend,
-      })
-        // We get the API response and receive data in JSON format...
-        .then((response) => response.json())
-        // ...then we update the users state
-        .then((data) => {
-          window.location.reload();
+      try {
+        var headers = {
+          Authorization: "Bearer " + token,
+        };
+        let dataToSend = new FormData();
+        Object.keys(data).forEach((key) => {
+          console.log("Key->", key);
+          dataToSend.append(key, data[key]);
         });
-    } catch (error) {
-      console.log("unable -> error", error);
+        // Where we're fetching data from
+        await fetch(`${API}/product/business`, {
+          method: "POST",
+          headers: headers,
+          body: dataToSend,
+        })
+          // We get the API response and receive data in JSON format...
+          .then((response) => response.json())
+          // ...then we update the users state
+          .then((data) => {
+            window.location.reload();
+          });
+      } catch (error) {
+        console.log("unable -> error", error);
+      }
+    } else {
+      setErrorMessage(true)
     }
   };
 
@@ -257,6 +224,18 @@ const AddProductBusiness = ({ brands }) => {
           <FormControl style={{ width: "100%" }}>
             {imageExperimentInput}
           </FormControl>
+          {errorMessage && (
+            <p
+              style={{
+                margin: "10px; 10px",
+                textAlign: "center",
+                color: "red",
+              }}
+            >
+              {" "}
+              Ingrese todos los campos{" "}
+            </p>
+          )}
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={() => addProduct()}>

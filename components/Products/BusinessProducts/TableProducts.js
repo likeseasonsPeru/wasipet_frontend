@@ -61,7 +61,7 @@ const TableProductsBusiness = () =>{
             'Authorization': 'Bearer ' + token
         }
         // Where we're fetching data from
-        fetch(`${API}/productsBusiness/ocultos`,{
+        fetch(`${API}/products/business/ocultos`,{
             method: 'GET',
             headers:headers
         })

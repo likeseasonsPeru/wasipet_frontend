@@ -54,7 +54,7 @@ const DisabledProductBusiness = ({
                         dataToSend.append(key, data[key]);
                 });
                 // Where we're fetching data from
-                await fetch(`${API}/product/${product._id}`, {
+                await fetch(`${API}/product/business/${product._id}`, {
                         method: 'PUT',
                         headers: headers,
                         body: dataToSend

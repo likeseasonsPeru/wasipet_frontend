@@ -96,7 +96,7 @@ const TableProducts = () =>{
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             }
-            fetch(`${API}/brands`,{
+           /*  fetch(`${API}/brands`,{
                 method: 'GET',
                 headers:headers
             })
@@ -105,7 +105,7 @@ const TableProducts = () =>{
               // ...then we update the users state
               .then(data =>{
                 setBrands(data)
-            })
+            }) */
           }catch(error){
               console.log(error)
           }

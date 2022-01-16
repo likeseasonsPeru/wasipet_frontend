@@ -220,7 +220,7 @@ class Products extends React.Component {
                           this.toggle("1");
                         }}
                       >
-                        Banners Cliente
+                        Productos Cliente
                       </NavLink>
                     </NavItem>
                     <NavItem>
@@ -230,7 +230,7 @@ class Products extends React.Component {
                           this.toggle("2");
                         }}
                       >
-                        Banners Business
+                        Productos Business
                       </NavLink>
                     </NavItem>
                   </Nav>

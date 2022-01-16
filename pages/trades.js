@@ -20,8 +20,10 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { Button, TabPane, TabContent, Nav, NavItem, NavLink } from "reactstrap";
 import ListNav from '../components/Dashboard/ListNav';
 import TableTrades from '../components/Trades/TableTrades';
+import TableTradesBusiness from '../components/Trades/TradesBusiness/TableTrades'
 const drawerWidth = 240;
 const classes = theme => ({
   root: {
@@ -106,8 +108,10 @@ class Trades extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      activeTab: '1',
       open : false,
     };
+    this.toggle = this.toggle.bind(this);
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
   }
@@ -130,6 +134,14 @@ class Trades extends React.Component {
     this.setState({open: false});
     console.log('Close'+ this.state.open);
   };
+
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
+  }
   
   render() {
     const {classes} = this.props;
@@ -183,7 +195,36 @@ class Trades extends React.Component {
           <Grid container spacing={2}>
             <Grid item xs={12}  >
               <Paper >
-                  <TableTrades></TableTrades>
+                <Nav tabs>
+                    <NavItem>
+                      <NavLink
+                        className={this.state.activeTab === "1" ? "active" : ""}
+                        onClick={() => {
+                          this.toggle("1");
+                        }}
+                      >
+                        Canjes Cliente
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={this.state.activeTab === "2" ? "active" : ""}
+                        onClick={() => {
+                          this.toggle("2");
+                        }}
+                      >
+                        Canjes Business
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                  <TabContent activeTab={this.state.activeTab}>
+                    <TabPane tabId="1">
+                      <TableTrades />
+                    </TabPane>
+                    <TabPane tabId="2">
+                      <TableTradesBusiness />
+                    </TabPane>
+                  </TabContent>
               </Paper>
             </Grid>
           </Grid>
