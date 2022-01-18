@@ -92,3 +92,22 @@ export const SELECT_OPTIONS = [
         ]
     }
 ]
+
+export const SELECT_OPTIONS_SERVICES = [
+    {
+        id: 1,
+        name: 'Categorias Prueba 1'
+    },
+    {
+        id: 2,
+        name: 'Categorias Prueba 2'
+    },
+    {
+        id: 3,
+        name: 'Categorias Prueba 3'
+    },
+    {
+        id: 4,
+        name: 'Categorias Prueba 4'
+    },
+]

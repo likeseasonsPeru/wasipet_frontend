@@ -13,6 +13,7 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import BlockIcon from '@material-ui/icons/Block';
 import RecentActorsSharpIcon from '@material-ui/icons/RecentActorsSharp';
 import AnnouncementSharpIcon from '@material-ui/icons/AnnouncementSharp';
+import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectorySharp';
 import Link from "next/link";
 
 export default class ListNav extends React.Component {
@@ -73,6 +74,14 @@ export default class ListNav extends React.Component {
               <RecentActorsSharpIcon />
             </ListItemIcon>
             <ListItemText primary="Banners" />
+          </ListItem>
+        </Link>
+        <Link href="/services">
+          <ListItem button>
+            <ListItemIcon>
+              <StoreMallDirectoryIcon />
+            </ListItemIcon>
+            <ListItemText primary="Stores" />
           </ListItem>
         </Link>
         <Link href="/message">
