@@ -111,3 +111,14 @@ export const SELECT_OPTIONS_SERVICES = [
         name: 'Categorias Prueba 4'
     },
 ]
+
+export const SELECT_OPTIONS_BUSINESS = [
+    {
+        id: 1,
+        name: 'Accesorios'
+    },
+    {
+        id: 2,
+        name: 'Equipos'
+    }
+]

@@ -101,7 +101,7 @@ const TableShops = () => {
                     <TableCell key={shop.direction} align="center">
                       {shop.direction}
                     </TableCell>
-                    <TableCell key={shop.ruc} align="center">
+                    <TableCell key={shop.district} align="center">
                       {shop.ruc}
                     </TableCell>
                     <TableCell key={Math.random()} align="center">

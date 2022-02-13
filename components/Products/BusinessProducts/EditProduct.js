@@ -11,7 +11,7 @@ import {
 import { getCookie } from "../../../utils/cookie";
 import useImageForm from "../userImageForm";
 import { API } from "../../../config";
-import { SELECT_OPTIONS } from "../../../utils/selectCategory";
+import { SELECT_OPTIONS_BUSINESS } from "../../../utils/selectCategory";
 
 const EditProductBusiness = ({ product, brands }) => {
   const [token] = useState(getCookie("token"));
@@ -205,8 +205,8 @@ const EditProductBusiness = ({ product, brands }) => {
               <MenuItem value="" disabled>
                 Seleccione la categoria
               </MenuItem>
-              {SELECT_OPTIONS
-                ? SELECT_OPTIONS.map((category) => (
+              {SELECT_OPTIONS_BUSINESS
+                ? SELECT_OPTIONS_BUSINESS.map((category) => (
                     <MenuItem value={category.name}>{category.name}</MenuItem>
                   ))
                 : null}
