@@ -142,9 +142,9 @@ const TableServices = () => {
                       {service.name}
                     </TableCell>
                     <TableCell key={Math.random()} align="center">
-                      {service.image ? (
+                      {service.photo ? (
                         <img
-                          src={`https://wasipetapp.com/api/public/${service.image}`}
+                          src={`https://wasipetapp.com/api/public/${service.photo}`}
                           style={{ width: "40px" }}
                         />
                       ) : (

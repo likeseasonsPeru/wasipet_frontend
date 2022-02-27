@@ -3,36 +3,93 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import {
   TextField,
   FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import { getCookie } from "../../utils/cookie";
 import { API } from "../../config";
+import {
+  getDepartments,
+  getDistrictsbyProvincia,
+  getDistritsData,
+  getProvinciasByDepartment,
+} from "../../APi/ubigeo";
 
 const AddShop = () => {
   const [token] = useState(getCookie("token"));
   const [modal, setModal] = useState(false);
+  // Selects
+  const [departments, setDepartments] = useState([]);
+  const [provinces, setProvinces] = useState([]);
+  const [distrits, setDistrits] = useState([]);
+  // Values
   const [name, setName] = useState("");
   const [ruc, setRuc] = useState("");
-  const [direction, setDirection] = useState("");
+  const [department, setDepartment] = useState("");
+  const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
+  const [direction, setDirection] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
 
   const toggle = () => {
-    //this.getUser();
     setModal(!modal);
   };
 
+  const fetchDepartments = async () => {
+    const dataDepartments = await getDepartments();
+    setDepartments(dataDepartments);
+  };
+
+  const fetchProvinces = async () => {
+    const dataProvinces = await getProvinciasByDepartment(department);
+    setProvinces(dataProvinces);
+  };
+
+  const fetchDistrits = async () => {
+    const dataDistrits = await getDistritsData(department, province);
+    setDistrits(
+      dataDistrits.map((row) => ({
+        label: row.Distrito,
+        value: row.IdUbigeo,
+      }))
+    );
+  };
+
+  useEffect(() => {
+    fetchDepartments();
+  }, []);
+
+  useEffect(() => {
+    if (department && department !== "") {
+      setProvinces([])
+      setDistrits([])
+      fetchProvinces();
+    }
+  }, [department]);
+
+  useEffect(() => {
+    if (province && province !== "") {
+      setDistrits([])
+      fetchDistrits();
+    }
+  }, [province]);
+
   useEffect(() => {
     setErrorMessage(false);
-  }, [name, ruc, direction, district]);
+  }, [name, ruc, direction, department, province, district]);
 
   const addShop = async () => {
-    if (name && ruc && direction && district) {
+    if (name && ruc && direction && department && province && district) {
       const data = {
         name,
         ruc,
         direction,
+        department,
+        province,
         district,
+
       };
       try {
         var headers = {
@@ -85,7 +142,7 @@ const AddShop = () => {
               name="name"
               type="text"
               autoFocus
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               value={name}
               className="colorInputDisabled"
             />
@@ -100,10 +157,93 @@ const AddShop = () => {
               name="ruc"
               type="text"
               autoFocus
-              onChange={e => setRuc(e.target.value)}
+              onChange={(e) => setRuc(e.target.value)}
               value={ruc}
               className="colorInputDisabled"
             />
+          </FormControl>
+
+          <FormControl
+            style={{ width: "100%", marginTop: "15px", marginBottom: "15px" }}
+          >
+            <InputLabel
+              id="label-department"
+              style={{ transform: "translate(0, 0px) scale(0.8)" }}
+            >
+              Departamento
+            </InputLabel>
+
+            <Select
+              value={department}
+              labelId="label-department"
+              onChange={(e) => setDepartment(e.target.value)}
+              displayEmpty
+              style={{ width: "100%" }}
+            >
+              <MenuItem value="" disabled>
+                Seleccione un departamento
+              </MenuItem>
+              {departments
+                ? departments.map((row) => (
+                    <MenuItem value={row}>{row}</MenuItem>
+                  ))
+                : null}
+            </Select>
+          </FormControl>
+
+          <FormControl
+            style={{ width: "100%", marginTop: "15px", marginBottom: "15px" }}
+          >
+            <InputLabel
+              id="label-province"
+              style={{ transform: "translate(0, 0px) scale(0.8)" }}
+            >
+              Provincia
+            </InputLabel>
+
+            <Select
+              value={province}
+              labelId="label-province"
+              onChange={(e) => setProvince(e.target.value)}
+              displayEmpty
+              style={{ width: "100%" }}
+            >
+              <MenuItem value="" disabled>
+                Seleccione una provincia
+              </MenuItem>
+              {provinces
+                ? provinces.map((row) => <MenuItem value={row}>{row}</MenuItem>)
+                : null}
+            </Select>
+          </FormControl>
+
+          <FormControl
+            style={{ width: "100%", marginTop: "15px", marginBottom: "15px" }}
+          >
+            <InputLabel
+              id="label-district"
+              style={{ transform: "translate(0, 0px) scale(0.8)" }}
+            >
+              Distrito
+            </InputLabel>
+
+            <Select
+              value={district}
+              labelId="label-district"
+              onChange={(e) => {
+                console.log(e.target)
+                setDistrict(e.target.value)
+              }}
+              displayEmpty
+              style={{ width: "100%" }}
+            >
+              <MenuItem value="" disabled>
+                Seleccione un distrito
+              </MenuItem>
+              {distrits
+                ? distrits.map((row) => <MenuItem value={row.label}>{row.label}</MenuItem>)
+                : null}
+            </Select>
           </FormControl>
           <FormControl style={{ width: "100%" }}>
             <TextField
@@ -115,27 +255,23 @@ const AddShop = () => {
               name="direccion"
               type="text"
               autoFocus
-              onChange={e => setDirection(e.target.value)}
+              onChange={(e) => setDirection(e.target.value)}
               value={direction}
               className="colorInputDisabled"
             />
           </FormControl>
-          <FormControl style={{ width: "100%" }}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="district"
-              label="Distrito de la tienda"
-              name="distrito"
-              type="text"
-              autoFocus
-              onChange={e => setDistrict(e.target.value)}
-              value={district}
-              className="colorInputDisabled"
-            />
-          </FormControl>
-          {errorMessage && <p style={{margin: '10px; 10px',  textAlign: "center", color: 'red' }}> Ingrese todos los campos </p>}
+          {errorMessage && (
+            <p
+              style={{
+                margin: "10px; 10px",
+                textAlign: "center",
+                color: "red",
+              }}
+            >
+              {" "}
+              Ingrese todos los campos{" "}
+            </p>
+          )}
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={() => addShop()}>

@@ -22,7 +22,6 @@ const EditService = ({ stores, service }) => {
   const [modal, setModal] = useState(false);
   const [name, setName] = useState(service.name || "");
   const [description, setDescription] = useState(service.description || "");
-  const [petType, setPetType] = useState(service.petType || "");
   const [category, setCategory] = useState(service.category || "");
   const [storesData, setStoresData] = useState(
     service.stores.map((s) => ({
@@ -52,7 +51,7 @@ const EditService = ({ stores, service }) => {
 
   useEffect(() => {
     setErrorMessage(false);
-  }, [name, description, petType, category, stores, currentShop]);
+  }, [name, description, /* petType, category, */ stores, currentShop]);
 
   const toggle = () => {
     setModal(!modal);
@@ -62,8 +61,7 @@ const EditService = ({ stores, service }) => {
     if (
       name &&
       description &&
-      petType &&
-      category &&
+      /* category && */
       experimentoCyber &&
       storesData.length !== 0
     ) {
@@ -72,8 +70,7 @@ const EditService = ({ stores, service }) => {
         description,
         active: false,
         description,
-        petType,
-        category,
+        /* category, */
         image: experimentoCyber,
         stores: JSON.stringify(
           storesData.map((s) => {
@@ -187,28 +184,7 @@ const EditService = ({ stores, service }) => {
               value={description}
             />
           </FormControl>
-          <FormControl style={{ width: "100%", marginTop: "15px" }}>
-            <InputLabel
-              id="label-petType"
-              style={{ transform: "translate(0, 0px) scale(0.8)" }}
-            >
-              Tipo de mascota
-            </InputLabel>
-            <Select
-              value={petType}
-              labelId="label-petType"
-              onChange={(e) => setPetType(e.target.value)}
-              displayEmpty
-              style={{ width: "100%" }}
-            >
-              <MenuItem value="" disabled>
-                Seleccione Tipo
-              </MenuItem>
-              <MenuItem value={"Dog"}>Perro</MenuItem>
-              <MenuItem value={"Cat"}>Gato</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
+          {/* <FormControl
             style={{ width: "100%", marginTop: "15px", marginBottom: "15px" }}
           >
             <InputLabel
@@ -233,7 +209,7 @@ const EditService = ({ stores, service }) => {
                   ))
                 : null}
             </Select>
-          </FormControl>
+          </FormControl> */}
           <FormControl style={{ width: "100%", marginTop: "15px" }}>
             {service ? imageExperimentInput : null}
           </FormControl>
