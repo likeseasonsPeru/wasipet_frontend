@@ -89,7 +89,6 @@ const AddShop = () => {
         department,
         province,
         district,
-
       };
       try {
         var headers = {

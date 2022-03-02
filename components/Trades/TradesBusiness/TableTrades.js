@@ -315,7 +315,7 @@ const TableTradesBusiness = () => {
               <TableCell align="center">Orden</TableCell>
               <TableCell align="center">Nombre de Usuario</TableCell>
               <TableCell align="center">Email de Usuario</TableCell>
-              <TableCell align="center">RUC - Tienda Destino</TableCell>
+              {/* <TableCell align="center">RUC - Tienda Destino</TableCell> */}
               <TableCell align="center">Marca del Producto</TableCell>
               <TableCell align="center">Producto</TableCell>
               {/* <TableCell align="center">Estado en app Antiguo</TableCell> */}
@@ -323,7 +323,7 @@ const TableTradesBusiness = () => {
               <TableCell align="center">Guardar Cambios</TableCell>
               <TableCell align="center">Devolver puntos</TableCell>
               <TableCell align="center">Fecha de Canje</TableCell>
-              <TableCell align="center">Ver detalles</TableCell>
+              {/* <TableCell align="center">Ver detalles</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -359,9 +359,9 @@ const TableTradesBusiness = () => {
                     <TableCell key={trade.type} align="center">
                       {trade.userEmail}
                     </TableCell>
-                    <TableCell key={trade.email} align="center">
+                   {/*  <TableCell key={trade.email} align="center">
                       {trade.store}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell
                       key={Math.random()}
                       align="center"
@@ -442,7 +442,7 @@ const TableTradesBusiness = () => {
                             </div>
                           </MenuItem>
                         )}
-                        <MenuItem value={"Entregado"} disabled>
+                        <MenuItem value={"Entregado"}>
                           <div style={{ color: "green", fontWeight: "bold" }}>
                             Entregado
                           </div>
@@ -507,14 +507,14 @@ const TableTradesBusiness = () => {
                     <TableCell key={Math.random()} align="center">
                       {new Date(trade.createdAt).toLocaleString("es-PE")}
                     </TableCell>
-                    <TableCell align="center">
+                    {/* <TableCell align="center">
                       <LookTrade
                         tradecode={trade.code_trade}
                         codeuser={trade.user}
                         storecode={trade.store}
                         fecha={trade.createdAt}
                       />
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 );
               })

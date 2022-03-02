@@ -46,7 +46,7 @@ const ViewDetailsTradeBusiness = ({tradecode, codeuser, storecode, fecha}) => {
             value={codeUser}
             className="colorInputDisabled"
           />
-          <TextField
+          {/* <TextField
             variant="outlined"
             margin="normal"
             fullWidth
@@ -58,7 +58,7 @@ const ViewDetailsTradeBusiness = ({tradecode, codeuser, storecode, fecha}) => {
             disabled
             value={storeCode}
             className="colorInputDisabled"
-          />
+          /> */}
           <TextField
             variant="outlined"
             margin="normal"

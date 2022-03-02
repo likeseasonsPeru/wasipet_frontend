@@ -176,7 +176,7 @@ const TableTradesServices = () => {
       };
       setStateTrade(newState, idCanjetoReturn);
 
-      await fetch(`${API}/canje/business/setState/${idCanjetoReturn}`, {
+      await fetch(`${API}/canjeService/setState/${idCanjetoReturn}`, {
         method: "PUT",
         headers: headers,
         body: JSON.stringify({ newState: newState }),
@@ -370,7 +370,7 @@ const TableTradesServices = () => {
                     <TableCell key={Math.random()} align="center">
                       <Select
                         value={
-                          trade.state == "Vencido" || trade.state == "Entregado"
+                          trade.state == "Vencido" || trade.state == "Entregado" || trade.state === "Canje realizado"
                             ? trade.state
                             : trade.newState
                         }
@@ -380,7 +380,8 @@ const TableTradesServices = () => {
                           trade.state == "Entregado" ||
                           trade.newState ==
                             "Proceso cancelado (puntos devueltos)" ||
-                          trade.newState == "Entregado"
+                          trade.newState == "Entregado" || 
+                          trade.newState == "Canje realizado"
                         }
                         onChange={(e) =>
                           setStateTrade(e.target.value, trade._id)
@@ -401,16 +402,16 @@ const TableTradesServices = () => {
                             Confirmado
                           </div>
                         </MenuItem>
-                        <MenuItem value={"En camino"}>
+                        {/* <MenuItem value={"En camino"}>
                           <div style={{ color: "blue", fontWeight: "bold" }}>
                             En camino
                           </div>
-                        </MenuItem>
-                        <MenuItem value={"Proceso cancelado (Sin stock)"}>
+                        </MenuItem> */}
+                        {/* <MenuItem value={"Proceso cancelado (Sin stock)"}>
                           <div style={{ color: "indigo", fontWeight: "bold" }}>
                             Sin stock
                           </div>
-                        </MenuItem>
+                        </MenuItem> */}
                         {trade.state == "Vencido" && (
                           <MenuItem value={"Vencido"} disabled>
                             <div style={{ color: "red", fontWeight: "bold" }}>
@@ -418,9 +419,9 @@ const TableTradesServices = () => {
                             </div>
                           </MenuItem>
                         )}
-                        <MenuItem value={"Entregado"} disabled>
+                        <MenuItem value={"Canje realizado"} disabled>
                           <div style={{ color: "green", fontWeight: "bold" }}>
-                            Entregado
+                          Canje realizado
                           </div>
                         </MenuItem>
                         <MenuItem

@@ -25,7 +25,7 @@ const EditProductBusiness = ({ product, brands }) => {
   const [experimentoCyber, imageExperimentInput, setInputFile] = useImageForm({
     placeholder: "Ingrese la imagen del producto",
     name: "image",
-    label: "Sube una imagen (Medida recomendada: 400x400px)",
+    label: "Sube una imagen (Medida recomendada: 400x600px, Formato: png sin fondo)",
     medida: "Medida recomendada:",
   });
 

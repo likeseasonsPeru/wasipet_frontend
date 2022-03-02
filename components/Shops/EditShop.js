@@ -96,6 +96,7 @@ const EditShop = ({ shop }) => {
         province,
         district,
       };
+      console.log("🚀 ~ file: EditShop.js ~ line 92 ~ editShop ~ data", data)
       try {
         var headers = {
           Authorization: "Bearer " + token,

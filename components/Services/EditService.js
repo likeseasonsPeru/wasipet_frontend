@@ -43,7 +43,7 @@ const EditService = ({ stores, service }) => {
   const [experimentoCyber, imageExperimentInput, setInputFile] = useImageForm({
     placeholder: "Ingrese la imagen del producto",
     name: "image",
-    label: "Sube una imagen (Medida recomendada: 400x400px)",
+    label: "Sube una imagen (Medida recomendada: 400x600px, Formato: png sin fondo)",
     medida: "Medida recomendada:",
   });
 
@@ -67,8 +67,6 @@ const EditService = ({ stores, service }) => {
     ) {
       const data = {
         name,
-        description,
-        active: false,
         description,
         /* category, */
         image: experimentoCyber,
