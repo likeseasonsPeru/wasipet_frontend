@@ -221,7 +221,7 @@ class Trades extends React.Component {
                           this.toggle("1");
                         }}
                       >
-                        Canjes Cliente
+                        Canjes productos CF
                       </NavLink>
                     </NavItem>
                     <NavItem>
@@ -231,7 +231,7 @@ class Trades extends React.Component {
                           this.toggle("2");
                         }}
                       >
-                        Canjes Servicios
+                        Canjes Servicios CF
                       </NavLink>
                     </NavItem>
                     <NavItem>
@@ -241,7 +241,7 @@ class Trades extends React.Component {
                           this.toggle("3");
                         }}
                       >
-                        Canjes Business
+                        Canjes Productos Bsnss
                       </NavLink>
                     </NavItem>
                   </Nav>
