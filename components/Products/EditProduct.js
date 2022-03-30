@@ -37,6 +37,8 @@ const EditProduct = ({
         const [weight, setWeight] = useState(product.weight || '') //foto
         const [pointsTrade, setPointsTrade] = useState(product.pointsTrade || '')
         const [pointsValue, setPointsValue] = useState(product.pointsValue || '')
+        const [sku, setSku] = useState(product.SKU || '')
+        const [price, setPrice] = useState(product.price || '')
         const [id] = useState(product._id || '')
         const [experimentoCyber, imageExperimentInput, setInputFile] = useImageForm({
             placeholder: 'Ingrese la imagen del producto',
@@ -115,6 +117,8 @@ const EditProduct = ({
               petType,
               weight,
               pointsTrade,
+              SKU: sku,
+              price,
               pointsValue,
               image:experimentoCyber, //image
               category,
@@ -286,6 +290,39 @@ const EditProduct = ({
                     className="colorInputDisabled"
                 />
               </FormControl>
+
+              <FormControl style={{ width: "100%" }}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="sku"
+                  label="SKU"
+                  name="sku"
+                  type="text"
+                  autoFocus
+                  onChange={(e) => setSku(e.target.value)}
+                  value={sku}
+                  className="colorInputDisabled"
+                />
+              </FormControl>
+
+              <FormControl style={{ width: "100%" }}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="price"
+                  label="Precio"
+                  name="price"
+                  type="number"
+                  autoFocus
+                  onChange={(e) => setPrice(e.target.value)}
+                  value={price}
+                  className="colorInputDisabled"
+                />
+              </FormControl>
+
               <FormControl style={{width: '100%', marginTop: '15px'}}>
                 <InputLabel id="label-category">Categoría del Producto</InputLabel>
                 <Select

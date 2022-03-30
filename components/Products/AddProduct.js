@@ -24,6 +24,8 @@ const AddProduct = ({ brands }) => {
   const [weight, setWeight] = useState(""); //foto
   const [pointsTrade, setPointsTrade] = useState("");
   const [pointsValue, setPointsValue] = useState("");
+  const [sku, setSku] = useState("")
+  const [price, setPrice] = useState("")
 
   const [experimentoCyber, imageExperimentInput, setInputFile] = useImageForm({
     placeholder: "Ingrese la imagen del producto",
@@ -43,6 +45,7 @@ const AddProduct = ({ brands }) => {
   const [options_TypeDetailDescription, setOptions_TypeDetailDescription] =
     useState(null);
   const [typeDetailDescription, setTypeDetailDescription] = useState("");
+  
 
   const [errorMessage, setErrorMessage] = useState(false);
 
@@ -115,7 +118,7 @@ const AddProduct = ({ brands }) => {
 
   React.useEffect(() => {
     setErrorMessage(false);
-  }, [name, brand, description, petType, pointsTrade, pointsValue, experimentoCyber, category]);
+  }, [name, brand, description, petType, pointsTrade, pointsValue, sku, price, experimentoCyber, category]);
 
   const toggle = () => {
     //this.getUser();
@@ -129,6 +132,8 @@ const AddProduct = ({ brands }) => {
       description &&
       petType &&
       pointsTrade &&
+      sku &&
+      price &&
       pointsValue &&
       experimentoCyber &&
       category
@@ -143,6 +148,8 @@ const AddProduct = ({ brands }) => {
         weight,
         pointsTrade,
         pointsValue,
+        SKU: sku,
+        price,
         image: experimentoCyber, //image
         category,
         type_description:
@@ -161,8 +168,9 @@ const AddProduct = ({ brands }) => {
           console.log("Key->", key);
           dataToSend.append(key, data[key]);
         });
+        console.log("🚀 ~ file: AddProduct.js ~ line 142 ~ addProduct ~ data", data)
         // Where we're fetching data from
-        await fetch(`${API}/product`, {
+        /* await fetch(`${API}/product`, {
           method: "POST",
           headers: headers,
           body: dataToSend,
@@ -172,7 +180,7 @@ const AddProduct = ({ brands }) => {
           // ...then we update the users state
           .then((data) => {
             window.location.reload();
-          });
+          }); */
       } catch (error) {
         console.log("unable -> error", error);
       }
@@ -326,6 +334,39 @@ const AddProduct = ({ brands }) => {
               className="colorInputDisabled"
             />
           </FormControl>
+
+          <FormControl style={{ width: "100%" }}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="sku"
+              label="SKU"
+              name="sku"
+              type="text"
+              autoFocus
+              onChange={(e) => setSku(e.target.value)}
+              value={sku}
+              className="colorInputDisabled"
+            />
+          </FormControl>
+
+          <FormControl style={{ width: "100%" }}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="price"
+              label="Precio"
+              name="price"
+              type="number"
+              autoFocus
+              onChange={(e) => setPrice(e.target.value)}
+              value={price}
+              className="colorInputDisabled"
+            />
+          </FormControl>
+
           <FormControl style={{ width: "100%", marginTop: "15px" }}>
             <InputLabel
               id="label-category"
