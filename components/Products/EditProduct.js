@@ -296,9 +296,9 @@ const EditProduct = ({
                   variant="outlined"
                   margin="normal"
                   fullWidth
-                  id="sku"
-                  label="SKU"
-                  name="sku"
+                  id="codigo_sap"
+                  label="Codigo Sap"
+                  name="codigo_sap"
                   type="text"
                   autoFocus
                   onChange={(e) => setSku(e.target.value)}

@@ -39,8 +39,8 @@ const TableUsers = () =>{
        let newDownload = await users.map(user => {
             var newObj = {}
             newObj['ID del Usuario'] = user.user_id
-            newObj['Nombres'] = user.name
-            newObj['Apellidos'] = user.surname
+            newObj['Nombres'] = user.firstName + ' ' + user.secondName
+            newObj['Apellidos'] = user.firstSurname + ' ' + user.secondSurname
             newObj['Correo electrónico'] = user.email
             newObj['Puntos'] = user.points
             newObj['Teléfono'] = user.phone
@@ -137,7 +137,7 @@ const TableUsers = () =>{
                                 {perPage * (page - 1) + (index + 1)}
                             </TableCell>
                             <TableCell key={user.name} align="center">
-                                {user.name + ' ' + user.surname}
+                                {user.firstName + ' ' + user.firstSurname + ' ' + user.secondSurname}
                             </TableCell>
                             <TableCell key={Math.random()} align="center">
                                 {user.points}
@@ -153,7 +153,7 @@ const TableUsers = () =>{
                             </TableCell>
                             <TableCell key={user.user_id} align="center">
                                 <LookUser
-                                name={user.name + ' ' + user.surname}
+                                name={user.firstName + ' ' + user.firstSurname + ' ' + user.secondSurname}
                                 points={user.points}
                                 type={user.type}
                                 phone={user.phone}
