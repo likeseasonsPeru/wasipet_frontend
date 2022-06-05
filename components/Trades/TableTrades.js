@@ -586,6 +586,7 @@ class TableTrades extends React.Component {
                           tradecode={trade.code_trade}
                           codeuser={trade.user}
                           storecode={trade.store}
+                          sapcode={trade.sap_id}
                           fecha={trade.createdAt}
                         />
                       </TableCell>

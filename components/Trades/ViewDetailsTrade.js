@@ -10,6 +10,7 @@ export default class LookTrade extends Component {
         tradecode: props.tradecode,
         codeuser: props.codeuser,
         storecode: props.storecode,
+        sapcode: props.sapcode,
         fecha: new Date(props.fecha),
     };
 
@@ -68,6 +69,21 @@ export default class LookTrade extends Component {
                 value={this.state.storecode}
                 className="colorInputDisabled"
               />
+              {this.state.sapcode && (
+                <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="codesap"
+                label="Código SAP"
+                name="codesap"
+                type="text"
+                autoFocus
+                disabled
+                value={this.state.sapcode}
+                className="colorInputDisabled"
+              />
+              )}
               <TextField
                 variant="outlined"
                 margin="normal"
